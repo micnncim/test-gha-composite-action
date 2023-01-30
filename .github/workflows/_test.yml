@@ -1,0 +1,25 @@
+name: Test
+
+on:
+  workflow_call:
+    inputs:
+      foo:
+        type: string
+        description: Foo
+        required: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v3
+
+      - name: Echo
+        run: echo "Hello from reusable workflow! inputs.foo=${{ inputs.foo }}"
+
+      - name: Run composite action
+        uses: micnncim/test-gha-composite-action/.github/actions/test@main
+        with:
+          foo: ${{ inputs.foo }}
